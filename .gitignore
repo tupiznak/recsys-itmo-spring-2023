@@ -30,3 +30,6 @@ botify/log/*
 *.synctex.gz
 *.nav
 *.snm
+
+venv
+sim/ab_log

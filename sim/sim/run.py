@@ -73,6 +73,7 @@ def run_experiment(
 
 
 def run_single(args):
+    is_one_day = args.oneday
     config = RecEnvConfigSchema().load(yaml.full_load(open(args.config)))
 
     stats = []
@@ -85,6 +86,8 @@ def run_single(args):
             stats.extend(
                 run_experiment(day, env, args.episodes, args.recommender, config)
             )
+            if is_one_day:
+                break
 
             time_control = TimeControl()
             time_control.cmdloop(
@@ -134,6 +137,9 @@ def main():
 
     single_parser = subparsers.add_parser(
         "single", help="Execute simulator in a single process"
+    )
+    single_parser.add_argument(
+        "-oneday", help="Execute simulator in a only one day", action='store_true'
     )
     single_parser.add_argument(
         "--recommender", choices=[DUMMY, REMOTE, CONSOLE], help="Recommender to use"
